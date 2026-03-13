@@ -14,7 +14,6 @@ import { MenuItem } from './MenuItemCard';
 function App() {
   // Dodajemo generičke tipove <MenuItem[]> za state
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [cart, setCart] = useState<MenuItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
@@ -34,12 +33,6 @@ function App() {
     fetchMenu();
   }, []);
 
-  // Filtriranje pretrage
-  const filteredItems = menuItems.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const scrollToProducts = () => {
     document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -54,12 +47,10 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-primary/20 selection:text-primary-dark">
+    <div className="min-h-screen bg-background text-text-secondary font-sans selection:bg-primary/20 selection:text-primary-dark">
       
       <Header 
         cartCount={cart.length}
-        searchTerm={searchTerm}
-        onSearchChange={(e) => setSearchTerm(e.target.value)}
         onMenuClick={scrollToProducts}
         onReserveClick={() => alert("Funkcija rezervacije je u pripremi!")}
         onCartClick={() => setIsCartOpen(true)}
@@ -69,16 +60,16 @@ function App() {
 
       {/* PRODUCTS GRID */}
       <main id="products-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Naša Ponuda</h2>
+        <div className="flex items-center justify-between mb-12 border-b-2 border-surface pb-4">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-text-main tracking-tight">Naša Ponuda</h2>
           {!loading && (
-            <span className="text-sm font-bold text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/10">
-              Pronađeno: {filteredItems.length} jela
+            <span className="text-sm font-bold text-primary bg-surface px-4 py-2 rounded-full">
+              Ukupno: {menuItems.length} jela
             </span>
           )}
         </div>
 
-        <MenuList loading={loading} items={filteredItems} onAddToCart={handleAddToCart} />
+        <MenuList loading={loading} items={menuItems} onAddToCart={handleAddToCart} />
       </main>
 
       <CartModal 

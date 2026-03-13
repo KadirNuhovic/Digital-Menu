@@ -8,14 +8,14 @@ interface MenuListProps {
 
 function MenuList({ loading, items, onAddToCart }: MenuListProps) {
   if (loading) {
-    return <div className="text-center py-20 text-slate-400 text-lg">Učitavanje menija...</div>;
+    return <div className="text-center py-20 text-text-secondary text-lg">Učitavanje menija...</div>;
   }
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-20 text-slate-500 bg-slate-100 rounded-xl">
-        <h3 className="text-2xl font-bold mb-2">Nema rezultata</h3>
-        <p>Nismo pronašli jela koja odgovaraju vašoj pretrazi.</p>
+      <div className="text-center py-20 text-text-secondary bg-surface rounded-xl border border-slate-700">
+        <h3 className="text-2xl font-bold mb-2">Nema jela u ponudi</h3>
+        <p>Trenutno nema dostupnih jela u meniju. Molimo Vas, proverite kasnije.</p>
       </div>
     );
   }
