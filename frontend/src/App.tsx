@@ -6,6 +6,7 @@ import Header from './Header';
 import Hero from './Hero';
 import MenuList from './MenuList';
 import Footer from './Footer';
+import CartModal from './CartModal';
 
 // Uvozimo tip
 import { MenuItem } from './MenuItemCard';
@@ -16,6 +17,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [cart, setCart] = useState<MenuItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
   // Fetch podataka sa backend-a
   useEffect(() => {
@@ -47,8 +49,12 @@ function App() {
     // Ovde bi mogla ići naprednija logika, npr. grupisanje istih item-a
   };
 
+  const handleRemoveFromCart = (indexToRemove: number) => {
+    setCart((prevCart) => prevCart.filter((_, index) => index !== indexToRemove));
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-primary/20 selection:text-primary-dark">
       
       <Header 
         cartCount={cart.length}
@@ -56,6 +62,7 @@ function App() {
         onSearchChange={(e) => setSearchTerm(e.target.value)}
         onMenuClick={scrollToProducts}
         onReserveClick={() => alert("Funkcija rezervacije je u pripremi!")}
+        onCartClick={() => setIsCartOpen(true)}
       />
 
       <Hero onMenuClick={scrollToProducts} />
@@ -63,9 +70,9 @@ function App() {
       {/* PRODUCTS GRID */}
       <main id="products-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl font-bold text-slate-900">Naša Ponuda</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Naša Ponuda</h2>
           {!loading && (
-            <span className="text-sm font-semibold text-primary-dark bg-primary/10 px-3 py-1 rounded-full">
+            <span className="text-sm font-bold text-primary bg-primary/10 px-4 py-2 rounded-full border border-primary/10">
               Pronađeno: {filteredItems.length} jela
             </span>
           )}
@@ -73,6 +80,13 @@ function App() {
 
         <MenuList loading={loading} items={filteredItems} onAddToCart={handleAddToCart} />
       </main>
+
+      <CartModal 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+        items={cart} 
+        onRemoveItem={handleRemoveFromCart}
+      />
 
       <Footer />
     </div>
