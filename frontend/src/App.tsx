@@ -7,11 +7,15 @@ import Hero from './Hero';
 import MenuList from './MenuList';
 import Footer from './Footer';
 
+// Uvozimo tip
+import { MenuItem } from './MenuItemCard';
+
 function App() {
-  const [menuItems, setMenuItems] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [cart, setCart] = useState([]);
+  // Dodajemo generičke tipove <MenuItem[]> za state
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [cart, setCart] = useState<MenuItem[]>([]);
 
   // Fetch podataka sa backend-a
   useEffect(() => {
@@ -35,10 +39,10 @@ function App() {
   );
 
   const scrollToProducts = () => {
-    document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleAddToCart = (itemToAdd) => {
+  const handleAddToCart = (itemToAdd: MenuItem) => {
     setCart([...cart, itemToAdd]);
     // Ovde bi mogla ići naprednija logika, npr. grupisanje istih item-a
   };
@@ -61,7 +65,7 @@ function App() {
         <div className="flex items-center justify-between mb-12">
           <h2 className="text-3xl font-bold text-slate-900">Naša Ponuda</h2>
           {!loading && (
-            <span className="text-sm font-semibold text-orange-600 bg-orange-100/50 px-3 py-1 rounded-full">
+            <span className="text-sm font-semibold text-primary-dark bg-primary/10 px-3 py-1 rounded-full">
               Pronađeno: {filteredItems.length} jela
             </span>
           )}

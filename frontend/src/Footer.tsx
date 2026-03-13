@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-12 border-t-4 border-orange-600">
+    <footer className="bg-slate-900 text-slate-300 py-12 border-t-4 border-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1 md:col-span-2">
@@ -12,9 +12,9 @@ function Footer() {
           <div>
             <h4 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Linkovi</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-orange-500 transition-colors">Početna</a></li>
-              <li><a href="#products-section" className="hover:text-orange-500 transition-colors">Meni</a></li>
-              <li><a href="#" className="hover:text-orange-500 transition-colors">O nama</a></li>
+              <li><a href="#" className="hover:text-primary-light transition-colors">Početna</a></li>
+              <li><a href="#products-section" className="hover:text-primary-light transition-colors">Meni</a></li>
+              <li><a href="#" className="hover:text-primary-light transition-colors">O nama</a></li>
             </ul>
           </div>
           <div>
@@ -29,8 +29,8 @@ function Footer() {
         <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500">
           <p>&copy; {new Date().getFullYear()} GastroMenu. Sva prava zadržana.</p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
-            <a href="#" className="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-orange-600 text-white cursor-pointer transition-colors">FB</a>
-            <a href="#" className="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-orange-600 text-white cursor-pointer transition-colors">IG</a>
+            <a href="#" className="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary text-white cursor-pointer transition-colors">FB</a>
+            <a href="#" className="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary text-white cursor-pointer transition-colors">IG</a>
           </div>
         </div>
       </div>

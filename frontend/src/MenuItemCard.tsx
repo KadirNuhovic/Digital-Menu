@@ -1,8 +1,24 @@
 import { useState } from 'react';
 import { PlusIcon, CheckIcon } from '@heroicons/react/24/solid';
 
-function MenuItemCard({ item, onAddToCart }) {
-  const [added, setAdded] = useState(false);
+// Definišemo kako izgleda jedno jelo (koristićemo ovo i u drugim fajlovima)
+export interface MenuItem {
+  id: number;
+  name: string;
+  category: string;
+  price: number | string;
+  image: string;
+  desc: string;
+}
+
+interface MenuItemCardProps {
+  item: MenuItem;
+  onAddToCart: (item: MenuItem) => void;
+  style?: React.CSSProperties;
+}
+
+function MenuItemCard({ item, onAddToCart, style }: MenuItemCardProps) {
+  const [added, setAdded] = useState<boolean>(false);
 
   const handleAddToCart = () => {
     onAddToCart(item);
@@ -11,7 +27,10 @@ function MenuItemCard({ item, onAddToCart }) {
   };
 
   return (
-    <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col">
+    <div 
+      className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col opacity-0 animate-fade-in-up hover:-translate-y-2"
+      style={style}
+    >
       <div className="relative h-48 overflow-hidden">
         <img
           src={item.image}
@@ -23,7 +42,7 @@ function MenuItemCard({ item, onAddToCart }) {
         </div>
       </div>
       <div className="p-6 flex-1 flex flex-col">
-        <div className="text-xs font-semibold text-orange-600 uppercase tracking-wider mb-2">{item.category}</div>
+        <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">{item.category}</div>
         <h3 className="text-xl font-bold text-slate-900 mb-2">{item.name}</h3>
         <p className="text-slate-500 text-sm mb-4 flex-1">{item.desc}</p>
         <button
@@ -32,7 +51,7 @@ function MenuItemCard({ item, onAddToCart }) {
           className={`w-full mt-auto py-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center
             ${added
               ? 'bg-green-500 text-white cursor-not-allowed'
-              : 'border-2 border-slate-200 text-slate-800 hover:border-orange-600 hover:text-orange-600'
+              : 'border-2 border-slate-200 text-slate-800 hover:bg-primary hover:text-white hover:border-primary'
             }`}
         >
           {added ? (

@@ -1,6 +1,12 @@
-import MenuItemCard from './MenuItemCard';
+import MenuItemCard, { MenuItem } from './MenuItemCard';
 
-function MenuList({ loading, items, onAddToCart }) {
+interface MenuListProps {
+  loading: boolean;
+  items: MenuItem[];
+  onAddToCart: (item: MenuItem) => void;
+}
+
+function MenuList({ loading, items, onAddToCart }: MenuListProps) {
   if (loading) {
     return <div className="text-center py-20 text-slate-400 text-lg">Učitavanje menija...</div>;
   }
@@ -16,8 +22,12 @@ function MenuList({ loading, items, onAddToCart }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {items.map((item) => (
-        <MenuItemCard key={item.id} item={item} onAddToCart={onAddToCart} />
+      {items.map((item, index) => (
+        <MenuItemCard 
+          key={item.id} 
+          item={item} 
+          onAddToCart={onAddToCart} 
+          style={{ animationDelay: `${index * 100}ms` }} />
       ))}
     </div>
   );
