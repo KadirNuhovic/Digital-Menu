@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup-db": "psql -U $DB_USER -h $DB_HOST -p $DB_PORT -f setup.sql",
+    "setup-db-local": "psql -U postgres -f setup.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

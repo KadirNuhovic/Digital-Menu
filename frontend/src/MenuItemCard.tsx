@@ -19,6 +19,7 @@ interface MenuItemCardProps {
 
 function MenuItemCard({ item, onAddToCart, style }: MenuItemCardProps) {
   const [added, setAdded] = useState<boolean>(false);
+  const [imageError, setImageError] = useState<boolean>(false);
 
   const handleAddToCart = () => {
     onAddToCart(item);
@@ -32,11 +33,20 @@ function MenuItemCard({ item, onAddToCart, style }: MenuItemCardProps) {
       style={style}
     >
       <div className="relative h-56 overflow-hidden">
-        <img
-          src={item.image}
-          alt={item.name}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-in-out"
-        />
+        {imageError ? (
+          <div className="w-full h-full bg-slate-800 flex items-center justify-center">
+            <span className="text-slate-300 font-extrabold tracking-widest text-sm">
+              {item.name?.slice(0, 2)?.toUpperCase()}
+            </span>
+          </div>
+        ) : (
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-in-out"
+            onError={() => setImageError(true)}
+          />
+        )}
         <div className="absolute top-4 right-4 bg-surface/80 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold text-primary shadow-lg ring-1 ring-slate-900/5">
           {item.price} RSD
         </div>
@@ -44,7 +54,7 @@ function MenuItemCard({ item, onAddToCart, style }: MenuItemCardProps) {
       <div className="p-6 flex-1 flex flex-col">
         <div className="text-xs font-bold text-primary uppercase tracking-widest mb-2">{item.category}</div>
         <h3 className="text-xl font-bold text-text-main mb-2">{item.name}</h3>
-        <p className="text-text-secondary text-sm mb-6 flex-1 leading-relaxed">{item.desc}</p>
+        <p className="text-slate-300 text-sm mb-6 flex-1 leading-relaxed">{item.desc || 'Nema opisa.'}</p>
         <button
           onClick={handleAddToCart}
           disabled={added}
