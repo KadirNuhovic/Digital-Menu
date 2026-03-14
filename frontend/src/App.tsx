@@ -17,6 +17,9 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [cart, setCart] = useState<MenuItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Sve");
+
+  const categories = ["Sve", "Doručak", "Glavna jela", "Pića"];
 
   // Fetch podataka sa backend-a
   useEffect(() => {
@@ -32,6 +35,11 @@ function App() {
     };
     fetchMenu();
   }, []);
+
+  // Filtriranje jela po kategoriji
+  const filteredItems = selectedCategory === "Sve"
+    ? menuItems
+    : menuItems.filter(item => item.category === selectedCategory);
 
   const scrollToProducts = () => {
     document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -60,16 +68,35 @@ function App() {
 
       {/* PRODUCTS GRID */}
       <main id="products-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="flex items-center justify-between mb-12 border-b-2 border-surface pb-4">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-text-main tracking-tight">Naša Ponuda</h2>
-          {!loading && (
-            <span className="text-sm font-bold text-primary bg-surface px-4 py-2 rounded-full">
-              Ukupno: {menuItems.length} jela
-            </span>
-          )}
+        <div className="flex flex-col gap-8 mb-12 border-b-2 border-surface pb-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-text-main tracking-tight">Naša Ponuda</h2>
+            {!loading && (
+              <span className="text-sm font-bold text-primary bg-surface px-4 py-2 rounded-full">
+                Ukupno: {filteredItems.length} jela
+              </span>
+            )}
+          </div>
+
+          {/* Kategorije */}
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2.5 rounded-xl font-bold transition-all duration-300 border-2 ${
+                  selectedCategory === category
+                    ? 'bg-primary text-slate-900 border-primary shadow-[0_0_20px_rgba(251,191,36,0.3)]'
+                    : 'bg-transparent text-text-secondary border-surface hover:border-primary/50 hover:text-white'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <MenuList loading={loading} items={menuItems} onAddToCart={handleAddToCart} />
+        <MenuList loading={loading} items={filteredItems} onAddToCart={handleAddToCart} />
       </main>
 
       <CartModal 
